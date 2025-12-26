@@ -1,0 +1,124 @@
+import React, { useEffect, useState } from "react";
+
+const channel = new BroadcastChannel("classroom-poll");
+
+export default function App() {
+  const [question, setQuestion] = useState("");
+  const [options, setOptions] = useState(["", ""]);
+  const [poll, setPoll] = useState(null);
+  const [hasVoted, setHasVoted] = useState(false);
+
+  useEffect(() => {
+    channel.onmessage = (event) => {
+      setPoll(event.data);
+    };
+  }, []);
+
+  const createPoll = () => {
+    const pollData = {
+      question,
+      options: options.map((opt) => ({
+        text: opt,
+        votes: 0,
+      })),
+    };
+    setPoll(pollData);
+    channel.postMessage(pollData);
+  };
+
+  const vote = (index) => {
+    if (hasVoted) return;
+
+    const updatedPoll = { ...poll };
+    updatedPoll.options[index].votes += 1;
+
+    setPoll(updatedPoll);
+    channel.postMessage(updatedPoll);
+    setHasVoted(true);
+  };
+
+  return (
+    <div style={styles.container}>
+      <h1>📊 Classroom Live Poll</h1>
+
+      {!poll && (
+        <div style={styles.card}>
+          <h2>Create Poll (Teacher)</h2>
+          <input
+            placeholder="Enter question"
+            value={question}
+            onChange={(e) => setQuestion(e.target.value)}
+            style={styles.input}
+          />
+
+          {options.map((opt, i) => (
+            <input
+              key={i}
+              placeholder={`Option ${i + 1}`}
+              value={opt}
+              onChange={(e) => {
+                const newOptions = [...options];
+                newOptions[i] = e.target.value;
+                setOptions(newOptions);
+              }}
+              style={styles.input}
+            />
+          ))}
+
+          <button onClick={createPoll} style={styles.button}>
+            Start Poll
+          </button>
+        </div>
+      )}
+
+      {poll && (
+        <div style={styles.card}>
+          <h2>{poll.question}</h2>
+
+          {poll.options.map((opt, i) => (
+            <button
+              key={i}
+              onClick={() => vote(i)}
+              disabled={hasVoted}
+              style={styles.optionButton}
+            >
+              {opt.text} — {opt.votes} votes
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+const styles = {
+  container: {
+    fontFamily: "Arial",
+    padding: 20,
+    textAlign: "center",
+  },
+  card: {
+    maxWidth: 400,
+    margin: "auto",
+    padding: 20,
+    borderRadius: 10,
+    boxShadow: "0 0 10px rgba(0,0,0,0.2)",
+  },
+  input: {
+    width: "100%",
+    padding: 8,
+    margin: "6px 0",
+  },
+  button: {
+    marginTop: 10,
+    padding: 10,
+    width: "100%",
+    cursor: "pointer",
+  },
+  optionButton: {
+    width: "100%",
+    padding: 10,
+    margin: "6px 0",
+    cursor: "pointer",
+  },
+};
