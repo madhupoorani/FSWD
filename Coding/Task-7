@@ -1,0 +1,79 @@
+import React, { useState } from "react";
+
+function AttendanceTracker() {
+  const [students, setStudents] = useState([
+    { id: 1, name: "Alice", present: false },
+    { id: 2, name: "Bob", present: false },
+    { id: 3, name: "Charlie", present: false },
+  ]);
+
+  const toggleAttendance = (id) => {
+    setStudents(
+      students.map((student) =>
+        student.id === id
+          ? { ...student, present: !student.present }
+          : student
+      )
+    );
+  };
+
+  return (
+    <div style={styles.container}>
+      <h2>Attendance Tracker</h2>
+
+      <ul style={styles.list}>
+        {students.map((student) => (
+          <li key={student.id} style={styles.item}>
+            <span>
+              {student.name} —{" "}
+              <strong
+                style={{
+                  color: student.present ? "green" : "red",
+                }}
+              >
+                {student.present ? "Present" : "Absent"}
+              </strong>
+            </span>
+
+            <button
+              onClick={() => toggleAttendance(student.id)}
+              style={{
+                ...styles.button,
+                backgroundColor: student.present ? "#f44336" : "#4CAF50",
+              }}
+            >
+              Mark {student.present ? "Absent" : "Present"}
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+const styles = {
+  container: {
+    maxWidth: "500px",
+    margin: "30px auto",
+    fontFamily: "Arial",
+  },
+  list: {
+    listStyle: "none",
+    padding: 0,
+  },
+  item: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: "10px",
+    borderBottom: "1px solid #ccc",
+  },
+  button: {
+    color: "#fff",
+    border: "none",
+    padding: "6px 10px",
+    cursor: "pointer",
+  },
+};
+
+export default AttendanceTracker;
