@@ -1,0 +1,93 @@
+import React, { useState } from "react";
+
+function CourseEnrollment() {
+  const [studentName, setStudentName] = useState("");
+  const [course, setCourse] = useState("");
+  const [enrollments, setEnrollments] = useState([]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!studentName || !course) return;
+
+    setEnrollments([
+      ...enrollments,
+      { studentName, course }
+    ]);
+
+    setStudentName("");
+    setCourse("");
+  };
+
+  return (
+    <div style={styles.container}>
+      <h2>Course Enrollment</h2>
+
+      <form onSubmit={handleSubmit} style={styles.form}>
+        <input
+          type="text"
+          placeholder="Student Name"
+          value={studentName}
+          onChange={(e) => setStudentName(e.target.value)}
+          style={styles.input}
+        />
+
+        <select
+          value={course}
+          onChange={(e) => setCourse(e.target.value)}
+          style={styles.input}
+        >
+          <option value="">Select Course</option>
+          <option value="React Basics">React Basics</option>
+          <option value="JavaScript Fundamentals">JavaScript Fundamentals</option>
+          <option value="Web Development">Web Development</option>
+        </select>
+
+        <button type="submit" style={styles.button}>
+          Enroll
+        </button>
+      </form>
+
+      <h3>Enrolled Courses</h3>
+
+      {enrollments.length === 0 ? (
+        <p>No enrollments yet.</p>
+      ) : (
+        <ul>
+          {enrollments.map((item, index) => (
+            <li key={index}>
+              <strong>{item.studentName}</strong> enrolled in{" "}
+              <em>{item.course}</em>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+const styles = {
+  container: {
+    maxWidth: "450px",
+    margin: "30px auto",
+    fontFamily: "Arial",
+  },
+  form: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "10px",
+  },
+  input: {
+    padding: "8px",
+    fontSize: "14px",
+  },
+  button: {
+    padding: "10px",
+    backgroundColor: "#2196F3",
+    color: "#fff",
+    border: "none",
+    cursor: "pointer",
+  },
+};
+
+export default CourseEnrollment;
