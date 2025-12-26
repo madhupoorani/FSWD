@@ -1,0 +1,99 @@
+import React, { useState } from "react";
+
+function TaskDashboard() {
+  const [task, setTask] = useState("");
+  const [tasks, setTasks] = useState([]);
+
+  const addTask = (e) => {
+    e.preventDefault();
+    if (!task.trim()) return;
+
+    setTasks([...tasks, task]);
+    setTask("");
+  };
+
+  const removeTask = (indexToRemove) => {
+    setTasks(tasks.filter((_, index) => index !== indexToRemove));
+  };
+
+  return (
+    <div style={styles.container}>
+      <h2>Task Dashboard</h2>
+
+      <form onSubmit={addTask} style={styles.form}>
+        <input
+          type="text"
+          placeholder="Enter a task"
+          value={task}
+          onChange={(e) => setTask(e.target.value)}
+          style={styles.input}
+        />
+        <button type="submit" style={styles.button}>
+          Add Task
+        </button>
+      </form>
+
+      {tasks.length === 0 ? (
+        <p>No tasks added yet.</p>
+      ) : (
+        <ul style={styles.list}>
+          {tasks.map((item, index) => (
+            <li key={index} style={styles.item}>
+              {item}
+              <button
+                onClick={() => removeTask(index)}
+                style={styles.removeButton}
+              >
+                ❌
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+const styles = {
+  container: {
+    maxWidth: "400px",
+    margin: "40px auto",
+    fontFamily: "Arial",
+  },
+  form: {
+    display: "flex",
+    gap: "10px",
+  },
+  input: {
+    flex: 1,
+    padding: "8px",
+    fontSize: "14px",
+  },
+  button: {
+    padding: "8px 12px",
+    backgroundColor: "#4CAF50",
+    color: "#fff",
+    border: "none",
+    cursor: "pointer",
+  },
+  list: {
+    listStyle: "none",
+    padding: 0,
+    marginTop: "20px",
+  },
+  item: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: "8px",
+    borderBottom: "1px solid #ccc",
+  },
+  removeButton: {
+    background: "none",
+    border: "none",
+    cursor: "pointer",
+    fontSize: "16px",
+  },
+};
+
+export default TaskDashboard;
