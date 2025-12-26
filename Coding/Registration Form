@@ -1,0 +1,102 @@
+import React, { useState } from "react";
+
+const RegistrationForm = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const [error, setError] = useState("");
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    setError("");
+    console.log("Registered User:", formData);
+    alert("Registration Successful!");
+  };
+
+  return (
+    <div style={styles.container}>
+      <h2>Registration Form</h2>
+
+      <form onSubmit={handleSubmit} style={styles.form}>
+        <input
+          type="text"
+          name="name"
+          placeholder="Full Name"
+          value={formData.name}
+          onChange={handleChange}
+          required
+        />
+
+        <input
+          type="email"
+          name="email"
+          placeholder="Email Address"
+          value={formData.email}
+          onChange={handleChange}
+          required
+        />
+
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          value={formData.password}
+          onChange={handleChange}
+          required
+        />
+
+        <input
+          type="password"
+          name="confirmPassword"
+          placeholder="Confirm Password"
+          value={formData.confirmPassword}
+          onChange={handleChange}
+          required
+        />
+
+        {error && <p style={styles.error}>{error}</p>}
+
+        <button type="submit">Register</button>
+      </form>
+    </div>
+  );
+};
+
+const styles = {
+  container: {
+    width: "300px",
+    margin: "50px auto",
+    padding: "20px",
+    border: "1px solid #ccc",
+    borderRadius: "8px",
+    textAlign: "center",
+  },
+  form: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "10px",
+  },
+  error: {
+    color: "red",
+    fontSize: "14px",
+  },
+};
+
+export default RegistrationForm;
