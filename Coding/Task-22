@@ -1,0 +1,57 @@
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+
+// Sample product data
+const productsData = {
+  Electronics: ["Laptop", "Smartphone", "Headphones"],
+  Clothing: ["T-Shirt", "Jeans", "Jacket"],
+  Books: ["JavaScript Guide", "React Handbook", "Python Basics"]
+};
+
+// Category component
+function Category({ title }) {
+  return (
+    <div>
+      <h2>{title}</h2>
+      <ul>
+        {productsData[title].map((item, index) => (
+          <li key={index}>{item}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+// Main App
+function App() {
+  const styles = {
+    container: { padding: "20px", fontFamily: "Arial" },
+    nav: { display: "flex", gap: "20px", marginBottom: "20px" },
+    link: { textDecoration: "none", color: "#007BFF" }
+  };
+
+  return (
+    <Router>
+      <div style={styles.container}>
+        <h1>🛒 Product Store</h1>
+
+        {/* Navigation */}
+        <nav style={styles.nav}>
+          <Link style={styles.link} to="/electronics">Electronics</Link>
+          <Link style={styles.link} to="/clothing">Clothing</Link>
+          <Link style={styles.link} to="/books">Books</Link>
+        </nav>
+
+        {/* Routes */}
+        <Routes>
+          <Route path="/" element={<h2>Select a category above to browse products</h2>} />
+          <Route path="/electronics" element={<Category title="Electronics" />} />
+          <Route path="/clothing" element={<Category title="Clothing" />} />
+          <Route path="/books" element={<Category title="Books" />} />
+        </Routes>
+      </div>
+    </Router>
+  );
+}
+
+export default App;
