@@ -1,0 +1,102 @@
+import React, { useState } from "react";
+
+function WorkshopRegistration() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    workshop: "",
+    mode: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!formData.name || !formData.email || !formData.workshop || !formData.mode) {
+      alert("Please fill all fields!");
+      return;
+    }
+
+    alert(
+      `🎉 Registration Successful!\n\nName: ${formData.name}\nEmail: ${formData.email}\nWorkshop: ${formData.workshop}\nMode: ${formData.mode}`
+    );
+  };
+
+  return (
+    <div style={{ display: "flex", justifyContent: "space-around", marginTop: "50px" }}>
+      
+      {/* FORM */}
+      <div style={{ width: "40%" }}>
+        <h2>Workshop Registration</h2>
+
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="Full Name"
+            name="name"
+            onChange={handleChange}
+            style={inputStyle}
+          />
+
+          <input
+            type="email"
+            placeholder="Email"
+            name="email"
+            onChange={handleChange}
+            style={inputStyle}
+          />
+
+          <select name="workshop" onChange={handleChange} style={inputStyle}>
+            <option value="">Select Workshop</option>
+            <option>Web Development</option>
+            <option>AI & ML</option>
+            <option>UI/UX Design</option>
+          </select>
+
+          <div style={{ marginBottom: "10px" }}>
+            <label>
+              <input
+                type="radio"
+                name="mode"
+                value="Online"
+                onChange={handleChange}
+              /> Online
+            </label>{" "}
+            <label>
+              <input
+                type="radio"
+                name="mode"
+                value="Offline"
+                onChange={handleChange}
+              /> Offline
+            </label>
+          </div>
+
+          <button type="submit" style={{ padding: "10px 20px" }}>
+            Register
+          </button>
+        </form>
+      </div>
+
+      {/* LIVE PREVIEW */}
+      <div style={{ width: "40%", background: "#f3f3f3", padding: "20px" }}>
+        <h3>Live Preview</h3>
+        <p><strong>Name:</strong> {formData.name || "-"}</p>
+        <p><strong>Email:</strong> {formData.email || "-"}</p>
+        <p><strong>Workshop:</strong> {formData.workshop || "-"}</p>
+        <p><strong>Mode:</strong> {formData.mode || "-"}</p>
+      </div>
+    </div>
+  );
+}
+
+const inputStyle = {
+  width: "100%",
+  padding: "8px",
+  marginBottom: "10px"
+};
+
+export default WorkshopRegistration;
