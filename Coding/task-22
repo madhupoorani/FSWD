@@ -1,0 +1,140 @@
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Link, useParams } from "react-router-dom";
+
+// Dummy product data
+const allProducts = {
+  electronics: ["Laptop", "Smartphone", "Headphones", "Smartwatch"],
+  fashion: ["T-shirt", "Jeans", "Sneakers", "Jacket"],
+  books: ["ReactJS Guide", "JavaScript Essentials", "CSS Mastery", "HTML & CSS Design"]
+};
+
+// Home Page
+const Home = () => {
+  const categories = ["electronics", "fashion", "books"];
+  return (
+    <div style={{
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      height: "100%",
+      width: "100%",
+      background: "#f5f5f5"
+    }}>
+      <div style={{ textAlign: "center" }}>
+        <h1>Welcome to Our Store</h1>
+        <p>Browse products by category:</p>
+        <div style={{ display: "flex", gap: "1rem", justifyContent: "center", marginTop: "1rem" }}>
+          {categories.map(cat => (
+            <Link
+              key={cat}
+              to={`/category/${cat}`}
+              style={{
+                padding: "1rem 2rem",
+                border: "1px solid #333",
+                borderRadius: "8px",
+                textDecoration: "none",
+                color: "#2c3e50",
+                fontWeight: "bold",
+                background: "#fff",
+                boxShadow: "0 2px 6px rgba(0,0,0,0.2)"
+              }}
+            >
+              {cat.toUpperCase()}
+            </Link>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Category Page
+const Category = () => {
+  const { categoryName } = useParams();
+  const products = allProducts[categoryName] || [];
+
+  return (
+    <div style={{
+      height: "100%",
+      width: "100%",
+      padding: "2rem",
+      background: "#f0f2f5",
+      boxSizing: "border-box"
+    }}>
+      <h2 style={{ textTransform: "capitalize", marginBottom: "1rem" }}>{categoryName}</h2>
+      {products.length === 0 ? (
+        <p>No products found in this category.</p>
+      ) : (
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
+            gap: "1rem",
+            height: "calc(100% - 50px)",
+            overflowY: "auto"
+          }}
+        >
+          {products.map((prod, index) => (
+            <div
+              key={index}
+              style={{
+                padding: "1rem",
+                border: "1px solid #ccc",
+                borderRadius: "8px",
+                textAlign: "center",
+                transition: "transform 0.2s",
+                cursor: "pointer",
+                background: "#fff",
+                boxShadow: "0 2px 4px rgba(0,0,0,0.1)"
+              }}
+              onMouseEnter={e => (e.currentTarget.style.transform = "scale(1.05)")}
+              onMouseLeave={e => (e.currentTarget.style.transform = "scale(1)")}
+            >
+              {prod}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+// Main App
+function App() {
+  return (
+    <Router>
+      <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
+        {/* Fixed Navbar */}
+        <nav
+          style={{
+            background: "#2c3e50",
+            padding: "1rem",
+            color: "#fff",
+            display: "flex",
+            gap: "1rem",
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            zIndex: 1000
+          }}
+        >
+          <Link style={{ color: "#fff", textDecoration: "none" }} to="/">Home</Link>
+          <Link style={{ color: "#fff", textDecoration: "none" }} to="/category/electronics">Electronics</Link>
+          <Link style={{ color: "#fff", textDecoration: "none" }} to="/category/fashion">Fashion</Link>
+          <Link style={{ color: "#fff", textDecoration: "none" }} to="/category/books">Books</Link>
+        </nav>
+
+        {/* Page content */}
+        <div style={{ flex: 1, marginTop: "64px", height: "calc(100% - 64px)" }}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/category/:categoryName" element={<Category />} />
+          </Routes>
+        </div>
+      </div>
+    </Router>
+  );
+}
+
+export default App;
