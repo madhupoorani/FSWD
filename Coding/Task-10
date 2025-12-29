@@ -1,0 +1,61 @@
+import React from "react";
+
+function HotelReservation() {
+
+  const bookRoom = () => {
+    const name = prompt("Enter your name:");
+    if (!name) {
+      alert("Name is required!");
+      return;
+    }
+
+    const roomType = prompt("Enter room type (Single / Double / Deluxe):");
+    if (!roomType) {
+      alert("Room type is required!");
+      return;
+    }
+
+    const nights = prompt("Enter number of nights:");
+    if (!nights || isNaN(nights)) {
+      alert("Please enter a valid number of nights!");
+      return;
+    }
+
+    let pricePerNight = 0;
+
+    if (roomType.toLowerCase() === "single") pricePerNight = 1000;
+    else if (roomType.toLowerCase() === "double") pricePerNight = 2000;
+    else if (roomType.toLowerCase() === "deluxe") pricePerNight = 3000;
+    else {
+      alert("Invalid room type!");
+      return;
+    }
+
+    const total = pricePerNight * Number(nights);
+
+    const confirmBooking = confirm(
+      `Please confirm your booking:\n\n` +
+      `Name: ${name}\n` +
+      `Room Type: ${roomType}\n` +
+      `Nights: ${nights}\n` +
+      `Total Amount: ₹${total}`
+    );
+
+    if (confirmBooking) {
+      alert(`✅ Booking Successful!\n\nThank you, ${name}. Enjoy your stay!`);
+    } else {
+      alert("❌ Booking Cancelled.");
+    }
+  };
+
+  return (
+    <div style={{ textAlign: "center", marginTop: "100px" }}>
+      <h2>Hotel Reservation System</h2>
+      <button onClick={bookRoom} style={{ padding: "10px 25px" }}>
+        Book Room
+      </button>
+    </div>
+  );
+}
+
+export default HotelReservation;
