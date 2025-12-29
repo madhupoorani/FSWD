@@ -1,0 +1,71 @@
+import React, { useState } from "react";
+
+function Login() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [role, setRole] = useState("");
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    if (!username || !password || !role) {
+      alert("Please fill all fields!");
+      return;
+    }
+
+    if (role === "admin") {
+      alert(`Welcome Admin ${username}! Redirecting to Admin Dashboard...`);
+    } else if (role === "student") {
+      alert(`Welcome Student ${username}! Redirecting to Student Dashboard...`);
+    } else if (role === "user") {
+      alert(`Welcome ${username}! Redirecting to User Dashboard...`);
+    }
+  };
+
+  return (
+    <div style={{ width: "300px", margin: "120px auto" }}>
+      <h2>Login</h2>
+
+      <form onSubmit={handleLogin}>
+        <input
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          style={inputStyle}
+        />
+
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          style={inputStyle}
+        />
+
+        <select
+          value={role}
+          onChange={(e) => setRole(e.target.value)}
+          style={inputStyle}
+        >
+          <option value="">Select Role</option>
+          <option value="admin">Admin</option>
+          <option value="student">Student</option>
+          <option value="user">User</option>
+        </select>
+
+        <button type="submit" style={{ padding: "10px", width: "100%" }}>
+          Login
+        </button>
+      </form>
+    </div>
+  );
+}
+
+const inputStyle = {
+  width: "100%",
+  padding: "8px",
+  marginBottom: "10px"
+};
+
+export default Login;
