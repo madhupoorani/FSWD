@@ -1,0 +1,49 @@
+import React from "react";
+
+function FlightBooking() {
+
+  const bookTicket = () => {
+    // Get passenger name
+    const name = prompt("Enter your name:");
+    if (!name) {
+      alert("Booking cancelled. Name is required.");
+      return;
+    }
+
+    // Get source
+    const from = prompt("Enter source city:");
+    if (!from) {
+      alert("Booking cancelled. Source is required.");
+      return;
+    }
+
+    // Get destination
+    const to = prompt("Enter destination city:");
+    if (!to) {
+      alert("Booking cancelled. Destination is required.");
+      return;
+    }
+
+    // Confirm booking
+    const confirmBooking = confirm(
+      `Please confirm your booking:\n\nName: ${name}\nFrom: ${from}\nTo: ${to}`
+    );
+
+    if (confirmBooking) {
+      alert(`✅ Ticket Booked Successfully!\n\nHappy Journey, ${name}!`);
+    } else {
+      alert("❌ Booking Cancelled.");
+    }
+  };
+
+  return (
+    <div style={{ textAlign: "center", marginTop: "100px" }}>
+      <h2>Flight Ticket Booking</h2>
+      <button onClick={bookTicket} style={{ padding: "10px 20px" }}>
+        Book Ticket
+      </button>
+    </div>
+  );
+}
+
+export default FlightBooking;
