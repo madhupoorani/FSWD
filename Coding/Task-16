@@ -1,0 +1,61 @@
+import React, { useState } from "react";
+
+function Authentication() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  // Dummy credentials
+  const correctUsername = "admin";
+  const correctPassword = "12345";
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    if (!username || !password) {
+      alert("⚠️ Please enter both username and password!");
+      return;
+    }
+
+    if (username === correctUsername && password === correctPassword) {
+      alert("✅ Login Successful! Welcome, " + username);
+    } else {
+      alert("❌ Invalid Username or Password!");
+    }
+  };
+
+  return (
+    <div style={{ width: "300px", margin: "120px auto" }}>
+      <h2>Login</h2>
+
+      <form onSubmit={handleLogin}>
+        <input
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          style={inputStyle}
+        />
+
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          style={inputStyle}
+        />
+
+        <button type="submit" style={{ width: "100%", padding: "10px" }}>
+          Login
+        </button>
+      </form>
+    </div>
+  );
+}
+
+const inputStyle = {
+  width: "100%",
+  padding: "8px",
+  marginBottom: "10px"
+};
+
+export default Authentication;
