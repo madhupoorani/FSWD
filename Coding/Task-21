@@ -1,0 +1,124 @@
+import React, { useState } from "react";
+
+function StudentDashboard() {
+  const [page, setPage] = useState("dashboard");
+
+  const students = [
+    { id: 1, name: "Aarthi", course: "BCA", year: "2nd Year" },
+    { id: 2, name: "Rahul", course: "B.Sc CS", year: "3rd Year" },
+    { id: 3, name: "Meena", course: "B.Com", year: "1st Year" }
+  ];
+
+  return (
+    <div style={styles.container}>
+      {/* Sidebar */}
+      <div style={styles.sidebar}>
+        <h2 style={{ color: "#fff" }}>Student Panel</h2>
+
+        <button style={styles.navBtn} onClick={() => setPage("dashboard")}>
+          Dashboard
+        </button>
+        <button style={styles.navBtn} onClick={() => setPage("students")}>
+          Students
+        </button>
+        <button
+          style={{ ...styles.navBtn, background: "#c0392b" }}
+          onClick={() => alert("Logged out!")}
+        >
+          Logout
+        </button>
+      </div>
+
+      {/* Main Content */}
+      <div style={styles.main}>
+        {page === "dashboard" && (
+          <>
+            <h1>Dashboard</h1>
+            <div style={styles.cards}>
+              <div style={styles.card}>Total Students: 3</div>
+              <div style={styles.card}>Courses: 3</div>
+              <div style={styles.card}>Active Status</div>
+            </div>
+          </>
+        )}
+
+        {page === "students" && (
+          <>
+            <h1>Student List</h1>
+            <table style={styles.table}>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Course</th>
+                  <th>Year</th>
+                </tr>
+              </thead>
+              <tbody>
+                {students.map((s) => (
+                  <tr key={s.id}>
+                    <td>{s.name}</td>
+                    <td>{s.course}</td>
+                    <td>{s.year}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
+const styles = {
+  container: {
+    display: "flex",
+    height: "100vh",
+    width: "100vw",
+    fontFamily: "Arial, sans-serif",
+  },
+  sidebar: {
+    width: "250px",
+    background: "#1f2937",
+    color: "#fff",
+    padding: "20px",
+    display: "flex",
+    flexDirection: "column",
+  },
+  navBtn: {
+    background: "#374151",
+    color: "#fff",
+    border: "none",
+    padding: "12px",
+    margin: "8px 0",
+    textAlign: "left",
+    cursor: "pointer",
+    borderRadius: "5px",
+  },
+  main: {
+    flex: 1,
+    background: "#f3f4f6",
+    padding: "30px",
+    overflowY: "auto",
+  },
+  cards: {
+    display: "flex",
+    gap: "20px",
+    marginTop: "20px",
+  },
+  card: {
+    background: "#ffffff",
+    padding: "20px",
+    borderRadius: "8px",
+    width: "200px",
+    boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
+  },
+  table: {
+    width: "100%",
+    background: "#fff",
+    borderCollapse: "collapse",
+    marginTop: "20px",
+  }
+};
+
+export default StudentDashboard;
