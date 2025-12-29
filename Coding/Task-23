@@ -1,0 +1,138 @@
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+
+// Sidebar component
+const Sidebar = () => {
+  const links = [
+    { name: "Home", path: "/" },
+    { name: "Profile", path: "/profile" },
+    { name: "Courses", path: "/courses" },
+    { name: "Grades", path: "/grades" },
+    { name: "Settings", path: "/settings" }
+  ];
+
+  return (
+    <div style={{
+      width: "220px",
+      background: "#2c3e50",
+      color: "#fff",
+      height: "100vh",
+      display: "flex",
+      flexDirection: "column",
+      padding: "1rem",
+      boxSizing: "border-box",
+      position: "fixed",
+      top: 0,
+      left: 0
+    }}>
+      <h2 style={{ textAlign: "center", marginBottom: "2rem" }}>Student Dashboard</h2>
+      {links.map(link => (
+        <Link
+          key={link.name}
+          to={link.path}
+          style={{
+            padding: "0.75rem 1rem",
+            marginBottom: "0.5rem",
+            textDecoration: "none",
+            color: "#fff",
+            borderRadius: "4px",
+            transition: "background 0.2s"
+          }}
+          onMouseEnter={e => (e.currentTarget.style.background = "#34495e")}
+          onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
+        >
+          {link.name}
+        </Link>
+      ))}
+    </div>
+  );
+};
+
+// Pages
+const Home = () => (
+  <div>
+    <h1>Welcome to the Dashboard</h1>
+    <p>This is your home page. Check your courses, grades, and profile here.</p>
+  </div>
+);
+
+const Profile = () => (
+  <div>
+    <h1>Profile</h1>
+    <p>Name: John Doe</p>
+    <p>Student ID: 123456</p>
+    <p>Email: john.doe@example.com</p>
+  </div>
+);
+
+const Courses = () => (
+  <div>
+    <h1>Courses</h1>
+    <ul>
+      <li>Mathematics</li>
+      <li>Computer Science</li>
+      <li>Physics</li>
+      <li>English Literature</li>
+    </ul>
+  </div>
+);
+
+const Grades = () => (
+  <div>
+    <h1>Grades</h1>
+    <table style={{ borderCollapse: "collapse", width: "100%" }}>
+      <thead>
+        <tr style={{ background: "#34495e", color: "#fff" }}>
+          <th style={{ border: "1px solid #ccc", padding: "8px" }}>Course</th>
+          <th style={{ border: "1px solid #ccc", padding: "8px" }}>Grade</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td style={{ border: "1px solid #ccc", padding: "8px" }}>Mathematics</td><td style={{ border: "1px solid #ccc", padding: "8px" }}>A</td></tr>
+        <tr><td style={{ border: "1px solid #ccc", padding: "8px" }}>Computer Science</td><td style={{ border: "1px solid #ccc", padding: "8px" }}>B+</td></tr>
+        <tr><td style={{ border: "1px solid #ccc", padding: "8px" }}>Physics</td><td style={{ border: "1px solid #ccc", padding: "8px" }}>A-</td></tr>
+        <tr><td style={{ border: "1px solid #ccc", padding: "8px" }}>English Literature</td><td style={{ border: "1px solid #ccc", padding: "8px" }}>B</td></tr>
+      </tbody>
+    </table>
+  </div>
+);
+
+const Settings = () => (
+  <div>
+    <h1>Settings</h1>
+    <p>Update your account information and preferences here.</p>
+  </div>
+);
+
+// Main App
+function App() {
+  return (
+    <Router>
+      <div style={{ display: "flex" }}>
+        {/* Sidebar */}
+        <Sidebar />
+
+        {/* Main content */}
+        <div style={{
+          marginLeft: "220px",
+          padding: "2rem",
+          flex: 1,
+          height: "100vh",
+          overflowY: "auto",
+          background: "#ecf0f1",
+          boxSizing: "border-box"
+        }}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/courses" element={<Courses />} />
+            <Route path="/grades" element={<Grades />} />
+            <Route path="/settings" element={<Settings />} />
+          </Routes>
+        </div>
+      </div>
+    </Router>
+  );
+}
+
+export default App;
