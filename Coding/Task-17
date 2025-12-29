@@ -1,0 +1,76 @@
+import React, { useState } from "react";
+
+function StudentFeedback() {
+  const [name, setName] = useState("");
+  const [rating, setRating] = useState("");
+  const [comment, setComment] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!name || !rating || !comment) {
+      alert("Please fill all fields!");
+      return;
+    }
+
+    alert(
+      `✅ Feedback Submitted Successfully!\n\n` +
+      `Name: ${name}\n` +
+      `Rating: ${rating} Star(s)\n` +
+      `Comment: ${comment}`
+    );
+
+    // Clear form
+    setName("");
+    setRating("");
+    setComment("");
+  };
+
+  return (
+    <div style={{ width: "350px", margin: "100px auto" }}>
+      <h2>Student Feedback Form</h2>
+
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="Your Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          style={inputStyle}
+        />
+
+        <select
+          value={rating}
+          onChange={(e) => setRating(e.target.value)}
+          style={inputStyle}
+        >
+          <option value="">Rate Us</option>
+          <option value="1">⭐ 1 - Poor</option>
+          <option value="2">⭐⭐ 2</option>
+          <option value="3">⭐⭐⭐ 3</option>
+          <option value="4">⭐⭐⭐⭐ 4</option>
+          <option value="5">⭐⭐⭐⭐⭐ 5</option>
+        </select>
+
+        <textarea
+          placeholder="Write your feedback..."
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+          style={{ ...inputStyle, height: "80px" }}
+        />
+
+        <button type="submit" style={{ padding: "10px", width: "100%" }}>
+          Submit Feedback
+        </button>
+      </form>
+    </div>
+  );
+}
+
+const inputStyle = {
+  width: "100%",
+  padding: "8px",
+  marginBottom: "10px"
+};
+
+export default StudentFeedback;
