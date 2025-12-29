@@ -1,0 +1,68 @@
+import React, { useState } from "react";
+
+function UserProfile() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!name) {
+      alert("Name is required!");
+      return;
+    }
+
+    if (!email || !email.includes("@")) {
+      alert("Please enter a valid email!");
+      return;
+    }
+
+    if (!phone || phone.length !== 10 || isNaN(phone)) {
+      alert("Please enter a valid 10-digit phone number!");
+      return;
+    }
+
+    alert(
+      `✅ Profile Updated Successfully!\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone}`
+    );
+  };
+
+  return (
+    <div style={{ width: "300px", margin: "100px auto" }}>
+      <h2>User Profile</h2>
+
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="Enter Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          style={{ width: "100%", padding: "8px", marginBottom: "10px" }}
+        />
+
+        <input
+          type="email"
+          placeholder="Enter Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          style={{ width: "100%", padding: "8px", marginBottom: "10px" }}
+        />
+
+        <input
+          type="text"
+          placeholder="Enter Phone Number"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+          style={{ width: "100%", padding: "8px", marginBottom: "10px" }}
+        />
+
+        <button type="submit" style={{ padding: "10px", width: "100%" }}>
+          Update Profile
+        </button>
+      </form>
+    </div>
+  );
+}
+
+export default UserProfile;
