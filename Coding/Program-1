@@ -1,0 +1,96 @@
+import React, { useState } from "react";
+
+export default function App() {
+  const styles = {
+    fullScreen: {
+      height: "100vh",
+      width: "100vw",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: "#eaeaea",
+      fontFamily: "Arial, sans-serif",
+    },
+    box: {
+      backgroundColor: "#ffffff",
+      padding: "30px 40px",
+      borderRadius: "12px",
+      textAlign: "center",
+      boxShadow: "0 5px 15px rgba(0,0,0,0.2)",
+      maxWidth: "450px",
+      width: "100%",
+    },
+    button: {
+      margin: "8px",
+      padding: "8px 14px",
+      cursor: "pointer",
+    },
+  };
+
+  function StudentDetails(props) {
+    return (
+      <div>
+        <h2>Student Profile</h2>
+        <p><b>Name:</b> {props.name}</p>
+        <p><b>Roll No:</b> {props.roll}</p>
+        <p><b>Department:</b> {props.department}</p>
+      </div>
+    );
+  }
+
+  function Attendance() {
+    const [present, setPresent] = useState(0);
+    const [absent, setAbsent] = useState(0);
+
+    return (
+      <div>
+        <h2>Attendance Tracker</h2>
+        <p>Present Days: {present}</p>
+        <p>Absent Days: {absent}</p>
+
+        <button style={styles.button} onClick={() => setPresent(present + 1)}>
+          Mark Present
+        </button>
+        <button style={styles.button} onClick={() => setAbsent(absent + 1)}>
+          Mark Absent
+        </button>
+      </div>
+    );
+  }
+
+  function ResultStatus() {
+    const [isPassed, setIsPassed] = useState(true);
+
+    return (
+      <div>
+        <h2>Result Status</h2>
+        <p>{isPassed ? "Status: PASS" : "Status: FAIL"}</p>
+
+        <button style={styles.button} onClick={() => setIsPassed(!isPassed)}>
+          Toggle Result
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div style={styles.fullScreen}>
+      <div style={styles.box}>
+
+        <StudentDetails
+          name="Madhupoorani"
+          roll="23BCS057"
+          department="Computer Science"
+        />
+
+        <hr />
+
+        <Attendance />
+
+        <hr />
+
+        <ResultStatus />
+      </div>
+    </div>
+  );
+}
